@@ -3,42 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./styles.css">
+    <title>Account Login</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h2 { color: #333; margin-bottom: 10px; }
+        p { color: #666; margin-bottom: 25px; font-size: 14px; }
+
+        .input-group { text-align: left; margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #555; font-size: 14px; }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        input:focus { border-color: #764ba2; }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #764ba2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover { background: #5a3a80; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+
+        #statusMsg { margin-top: 15px; font-size: 14px; min-height: 20px; }
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+    </style>
 </head>
 <body>
-    <form id="contactForm">
-      <div class="one">
-        <div class="two">
-         <label for="text">Name:  </label>
-      </div>
-      <div class="three ">
-        <input class="four" type="text" name="F_Name" placeholder="Enter First Name" required>
-        <input class="four" type="text" name="M_Name" placeholder="Enter Middle Name" required>
-        <input class="four" type="text" name="L_Name" placeholder="Enter Last Name" required>
-      </div>
-      </div>
-<div class="one">
-  <div class="two">
-         <label for="text">Email  </label>
-      </div>
-  <input  class="four" type="email" name="email" placeholder="Enter Email" required>
-  <div class="five">    
-  <div class="two">
-         <label for="text">Mobile No:  </label>
-      </div>
-  <input class="four" type="text" name="mobile" placeholder="Enter mobile no">
-  </div> 
-  </div>
-  <button type="submit">Submit</button>
 
-</form>
+<div class="login-card">
+    <h2>Welcome Back</h2>
+    <p>Please enter your details to sign in</p>
 
-<style>
-  #contactForm { display: flex; flex-direction: column; gap: 10px; max-width: 300px; }
-  input { padding: 8px; }
-  button { padding: 10px; cursor: pointer; }
-</style>
-<script src="script.js"></script>
+    <form id="loginForm">
+        <div class="input-group">
+            <label>Email Address</label>
+            <input type="email" id="email" placeholder="name@company.com" required>
+        </div>
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" id="submitBtn">Sign In</button>
+    </form>
+
+    <div id="statusMsg"></div>
+</div>
+
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzYa6Yvvh2sJNflTu8aW08HR4uDDANyPKbUiHBzS9xW3HqdOll6Py5m7pEbNiUDFvUIUQ/exec'; 
+    //const appURL = 'https://softyashoda-eng.github.io/hcj/'; // <--- THE PAGE YOU WANT TO OPEN
+
+    const appURL = 'index.html';
+    
+    const form = document.getElementById('loginForm');
+    const btn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        
+        btn.disabled = true;
+        btn.innerText = "Opening Application...";
+
+        const payload = {
+            email: form.email.value,
+            password: form.password.value
+        };
+
+        fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify(payload)
+        })
+        .then(() => {
+            // This is the "Magic" line that opens your app
+            window.location.href = appURL; 
+        })
+        .catch(error => {
+            alert("Something went wrong. Please try again.");
+            btn.disabled = false;
+            btn.innerText = "Sign In";
+        });
+    });
+    </script>
+
 </body>
 </html>
