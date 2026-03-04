@@ -1,1 +1,31 @@
+.one{
+    display:flex;
+    word-wrap: none;
+    word-spacing: normal;
+    max-width: 33.3333%;
+}
+label{
+    display: block;
+    margin-top: 12px;
+}
+.two{
+    display: flex;
+    width: 100px;
+}
+.three{
+    display: flex;
+}
+.four{
+    margin: 5px;
+}
+.input-padding{
+    padding-bottom: 0
+}
+.input-margin{
+    
+    margin-bottom: 0
+}
 
+.five{
+    display: flex;
+}
